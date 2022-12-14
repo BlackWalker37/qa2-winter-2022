@@ -58,7 +58,7 @@ public class WorkingWithTicketsHW {
         browser.findElement(BOOK_BTN).click();
 
         List<WebElement> seat = browser.findElements(SEATS);
-        seat.get(26).click();
+//        seat.get(26).click();
 
         for (WebElement we: seat) {
             if (we.getText().equals(seatsToSelect)) {
