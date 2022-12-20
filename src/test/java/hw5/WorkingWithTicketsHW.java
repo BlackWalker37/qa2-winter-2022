@@ -1,5 +1,6 @@
 package hw5;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -28,7 +29,14 @@ public class WorkingWithTicketsHW {
     private final By GO_BTN = By.xpath(".//span[@class='gogogo']");
     private final By GET_PRICE_BTN = By.xpath("//span [text() ='Get Price']");
     private final By BOOK_BTN = By.id("book2");
+    private final By BOOK2_BTN = By.id("book3");
     private final By SEATS = By.xpath(".//div [@class='seat']");
+
+    private final String FROM_AIRPORT = "EZE";
+    private final String TO_AIRPORT = "TNR";
+    private final String PASSENGER_NAME = "Dmitrijs!";
+
+    private final By RESERVATION_INFOR = By.xpath(".//span[@class = 'bTxt']");
 
     private WebDriver browser;
     private WebDriverWait wait;
@@ -53,7 +61,30 @@ public class WorkingWithTicketsHW {
 
         browser.findElement(GO_BTN).click();
 
+        type(FIRST_NAME, "Dmitrijs");
+        type(LAST_NAME, "Borsukovskis");
+        type(DISCOUNT, "DIS25");
+        type(ADULTS, "1");
+        type(CHILDREN, "0");
+        type(BAG, "4");
+        select(FLIGHT, "11");
+
         browser.findElement(GET_PRICE_BTN).click();
+
+        wait.until(ExpectedConditions.numberOfElementsToBe(RESERVATION_INFOR, 5));
+        List<WebElement> reservationInformation = browser.findElements(RESERVATION_INFOR);
+        String getFirstFromAirport = reservationInformation.get(0).getText();
+        String getFirstToAirport = reservationInformation.get(1).getText();
+        String getSecondFromAirport = reservationInformation.get(3).getText();
+        String getSecondToAirport = reservationInformation.get(4).getText();
+        String getPassengerName = reservationInformation.get(2).getText();
+        getPassengerName.substring(0, getPassengerName.length() - 1);
+
+        Assertions.assertEquals(FROM_AIRPORT, getFirstFromAirport, "Departure airports are not the same");
+        Assertions.assertEquals(TO_AIRPORT, getFirstToAirport, "Arrival airports are not the same");
+        Assertions.assertEquals(FROM_AIRPORT,getSecondFromAirport, "Departure airports are not the same");
+        Assertions.assertEquals(TO_AIRPORT,getSecondToAirport, "Arrival airports are not the same");
+        Assertions.assertEquals(PASSENGER_NAME, getPassengerName, "Wrong passenger name");
 
         browser.findElement(BOOK_BTN).click();
 
@@ -68,14 +99,7 @@ public class WorkingWithTicketsHW {
             }
         }
 
-        type(FIRST_NAME, "Dmitrijs");
-        type(LAST_NAME, "Borsukovskis");
-        type(DISCOUNT, "DIS25");
-        type(ADULTS, "1");
-        type(CHILDREN, "0");
-        type(BAG, "4");
-        select(FLIGHT, "11");
-
+        browser.findElement(BOOK2_BTN).click();
     }
 
     private void select(By locator, String value) {
@@ -89,6 +113,10 @@ public class WorkingWithTicketsHW {
         WebElement input = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
         input.clear();
         input.sendKeys(text);
+    }
+
+    public void waitForElementsCountToBe(By locator, int count) {
+        wait.until(ExpectedConditions.numberOfElementsToBe(locator, count));
     }
 
 }
