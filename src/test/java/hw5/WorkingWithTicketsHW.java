@@ -115,8 +115,8 @@ public class WorkingWithTicketsHW {
         input.sendKeys(text);
     }
 
-    public void waitForElementsCountToBe(By locator, int count) {
-        wait.until(ExpectedConditions.numberOfElementsToBe(locator, count));
-    }
+  //  public void waitForElementsCountToBe(By locator, int count) {
+  //      wait.until(ExpectedConditions.numberOfElementsToBe(locator, count));
+  //  }
 
 }

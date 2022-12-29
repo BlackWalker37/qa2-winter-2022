@@ -1,6 +1,9 @@
 package hw1;
 
+import org.junit.jupiter.api.Test;
+
 public class ObjectHomeWork {
+
     public void doingHomeWork () {
        CreditCard myCreditCard = new CreditCard();
 

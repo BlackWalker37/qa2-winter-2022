@@ -35,6 +35,8 @@ public class AmazonTest {
         wait.until(ExpectedConditions.elementToBeClickable(ACCEPT_LOCATION));
         browser.findElement(ACCEPT_LOCATION).click();
 
+
+
         List<WebElement> listOfOptions = browser.findElements(LIST_BESTSELLER);
 
         for (WebElement location : listOfOptions) {
